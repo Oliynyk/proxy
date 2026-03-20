@@ -34,6 +34,8 @@ export default async function handler(req, res) {
   delete fetchHeaders.connection;
   delete fetchHeaders['content-length'];
   delete fetchHeaders['transfer-encoding'];
+  delete fetchHeaders.origin;
+  delete fetchHeaders.referer;
 
   // Явно забороняємо стиснення з боку Yandex, щоб уникнути ERR_CONTENT_DECODING_FAILED
   fetchHeaders['Accept-Encoding'] = 'identity';
