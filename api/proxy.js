@@ -36,6 +36,14 @@ export default async function handler(req, res) {
   delete fetchHeaders['transfer-encoding'];
   delete fetchHeaders.origin;
   delete fetchHeaders.referer;
+  
+  // ВИДАЛЯЄМО IP-заголовки, які показують Яндексу реальну країну користувача (Україну)
+  // Через них Яндекс блокує запит 451 (Unavailable For Legal Reasons)
+  delete fetchHeaders['x-forwarded-for'];
+  delete fetchHeaders['x-real-ip'];
+  delete fetchHeaders['x-vercel-forwarded-for'];
+  delete fetchHeaders['forwarded'];
+  delete fetchHeaders['via'];
 
   // Явно забороняємо стиснення з боку Yandex, щоб уникнути ERR_CONTENT_DECODING_FAILED
   fetchHeaders['Accept-Encoding'] = 'identity';
